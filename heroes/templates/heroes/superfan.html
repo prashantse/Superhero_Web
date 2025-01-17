@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Most Popular Superheroes</h2>
+  <ul>
+    {% for item in superfans %}
+      <li>{{ item.name }} - Superfans: {{ item.fan_count }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

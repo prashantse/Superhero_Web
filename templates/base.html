@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero App</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <nav>
+       <a href="{% url 'hero-list' %}">Superheroes</a>
+       <a href="{% url 'leaderboard' %}">Leaderboard</a>
+       <a href="{% url 'superfan' %}">Superfan</a>
+       <a href="{% url 'compare-heroes' %}">Compare</a>
+       {% if user.is_authenticated %}
+          <a href="{% url 'profile' pk=user.pk %}">Profile</a>
+          <a href="{% url 'logout' %}">Logout</a>
+       {% else %}
+          <a href="{% url 'register' %}">Register</a>
+           <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+       {% comment %} <button id="darkModeToggle">Dark Mode</button>
+       <select id="fontStyleSelect">
+        <option value="font-style-1">Arial</option>
+        <option value="font-style-2">Georgia</option>
+        <option value="font-style-3">Courier New</option>
+      </select> {% endcomment %}
+   </nav>
+   <div class="container">
+      {% block content %}
+      {% endblock %}
+   </div>
+  <script>
+     const darkModeToggle = document.getElementById('darkModeToggle');
+     const body = document.body;
+     const nav = document.querySelector("nav");
+     const cards = document.querySelectorAll(".superhero-card")
+     const tagClouds = document.querySelectorAll(".tag-cloud")
+      darkModeToggle.addEventListener('click', () => {
+         body.classList.toggle('dark-mode');
+          nav.classList.toggle("dark-mode");
+         cards.forEach(card => {
+           card.classList.toggle("dark-mode");
+          })
+           tagClouds.forEach(tagCloud => {
+            tagCloud.classList.toggle("dark-mode");
+            })
+         localStorage.setItem('dark_mode', body.classList.contains('dark-mode'));
+
+      });
+     if(localStorage.getItem('dark_mode')==='true'){
+        body.classList.add('dark-mode');
+          nav.classList.add("dark-mode");
+            cards.forEach(card => {
+           card.classList.add("dark-mode");
+            })
+              tagClouds.forEach(tagCloud => {
+             tagCloud.classList.add("dark-mode");
+            })
+
+     }
+      const fontStyleSelect = document.getElementById('fontStyleSelect');
+        fontStyleSelect.addEventListener('change', () => {
+         const selectedStyle = fontStyleSelect.value;
+         body.classList.remove('font-style-1', 'font-style-2', 'font-style-3');
+         body.classList.add(selectedStyle);
+         localStorage.setItem('font_style', selectedStyle);
+         });
+         if(localStorage.getItem('font_style')){
+             const selectedStyle = localStorage.getItem('font_style')
+            body.classList.add(selectedStyle);
+              fontStyleSelect.value = selectedStyle;
+      }
+  </script>
+
+</body>
+</html>

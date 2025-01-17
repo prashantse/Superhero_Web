@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Leaderboard</h2>
+    <ol>
+        {% for person in data %}
+            <li>{{ person.name }} - Score: {{ person.score }}</li>
+        {% endfor %}
+    </ol>
+{% endblock %}

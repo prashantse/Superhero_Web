@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Profile: {{ user.username }}</h2>
+    <p> Full name: {{user.full_name}}</p>
+    <p> Email: {{user.email}}</p>
+    <p> City: {{user.city}}</p>
+    {% if user.profile_pic %}
+    <img src="{{ user.profile_pic.url }}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
+    {% endif %}
+  <form method="post">
+      {% csrf_token %}
+        <label for="superfan">Superfan of:</label>
+        <select name="superfan" id="superfan">
+          <option value="">Select One</option>
+          {% for hero in superheroes %}
+            <option value="{{ hero.id }}" {% if hero == user.superfan_of %}selected{% endif %}>{{ hero.name }}</option>
+          {% endfor %}
+        </select>
+      <br>
+      <label for="fan">Fan of:</label>
+      <select name="fan" id="fan" multiple>
+        {% for hero in superheroes %}
+          <option value="{{ hero.id }}" {% if hero in user.fan_of.all %}selected{% endif %}>{{ hero.name }}</option>
+        {% endfor %}
+      </select>
+
+    <button type="submit">Update</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class ="center-text">Compare Superheroes</h2>
+    <div class ="form-and-comparison-container">
+        <form method="get" action="" class="comparison-form">
+            <div class = "select-container">
+                <label for="hero1">Superhero 1:</label>
+                <select name="hero1" id="hero1" class="form-select">
+                    <option value="">Select</option>
+                    {% for superhero in superheroes %}
+                        <option value="{{ superhero.id }}" {% if hero1.id|stringformat:"s" == superhero.id|stringformat:"s" %} selected {% endif %}>{{ superhero.name }}</option>
+                    {% endfor %}
+                </select>
+                 <label for="hero2">Superhero 2:</label>
+                    <select name="hero2" id="hero2" class="form-select">
+                       <option value="">Select</option>
+                       {% for superhero in superheroes %}
+                            <option value="{{ superhero.id }}" {% if hero2.id|stringformat:"s" == superhero.id|stringformat:"s" %} selected {% endif %}>{{ superhero.name }}</option>
+                        {% endfor %}
+                   </select>
+            </div>
+            <button type="submit" class="compare-button">Compare</button>
+
+         </form>
+
+        {% if hero1 and hero2 %}
+            <div class="comparison-container-sidebyside">
+                <div class = "hero-card-side running-border" >
+                   {% with hero=hero1 %}
+                      {% include 'heroes/hero_card.html' %}
+                    {% endwith %}
+                </div>
+                 <div class = "hero-card-side running-border">
+                   {% with hero=hero2%}
+                       {% include 'heroes/hero_card.html' %}
+                   {% endwith %}
+                </div>
+
+            </div>
+        {% endif %}
+   </div>
+{% endblock %}

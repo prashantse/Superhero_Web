@@ -1,0 +1,111 @@
+<div class="hero-card-details">
+    <div class="image-main-detail">
+        {% if hero.main_image %}
+            <img src="{{ hero.main_image.url }}" alt="Main Image">
+        {% endif %}
+    </div>
+    <div>
+        <h2>{{ hero.name }}</h2>
+        <p>Universe: {{ hero.universe }}</p>
+        <p>Likes: {{ hero.likes.count }}</p>
+    </div>
+</div>
+
+<div class="comparison-bars">
+    <div class="stat">
+        <label>Wisdom:</label>
+        <div class="bar-container">
+            <div class="bar" 
+                 style="width: {{ hero.wisdom }}%; 
+                        background-color: 
+                            {% if hero.wisdom > 80 %}#00ff00
+                            {% elif hero.wisdom > 50 %}#ffff00
+                            {% else %}#ff0000{% endif %};">
+                <span class="stat-value">{{ hero.wisdom }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="stat">
+        <label>Raw Power:</label>
+        <div class="bar-container">
+            <div class="bar" 
+                 style="width: {{ hero.raw_power }}%; 
+                        background-color: 
+                            {% if hero.raw_power > 80 %}#00ff00
+                            {% elif hero.raw_power > 50 %}#ffff00
+                            {% else %}#ff0000{% endif %};">
+                <span class="stat-value">{{ hero.raw_power }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="stat">
+        <label>Combat Skills:</label>
+        <div class="bar-container">
+            <div class="bar" 
+                 style="width: {{ hero.combat_skills }}%; 
+                        background-color: 
+                            {% if hero.combat_skills > 80 %}#00ff00
+                            {% elif hero.combat_skills > 50 %}#ffff00
+                            {% else %}#ff0000{% endif %};">
+                <span class="stat-value">{{ hero.combat_skills }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="stat">
+        <label>Durability:</label>
+        <div class="bar-container">
+            <div class="bar" 
+                 style="width: {{ hero.durability }}%; 
+                        background-color: 
+                            {% if hero.durability > 80 %}#00ff00
+                            {% elif hero.durability > 50 %}#ffff00
+                            {% else %}#ff0000{% endif %};">
+                <span class="stat-value">{{ hero.durability }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="stat">
+        <label>Intelligence:</label>
+        <div class="bar-container">
+            <div class="bar" 
+                 style="width: {{ hero.intelligence }}%; 
+                        background-color: 
+                            {% if hero.intelligence > 80 %}#00ff00
+                            {% elif hero.intelligence > 50 %}#ffff00
+                            {% else %}#ff0000{% endif %};">
+                <span class="stat-value">{{ hero.intelligence }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="stat">
+        <label>Agility:</label>
+        <div class="bar-container">
+            <div class="bar" 
+                 style="width: {{ hero.agility }}%; 
+                        background-color: 
+                            {% if hero.agility > 80 %}#00ff00
+                            {% elif hero.agility > 50 %}#ffff00
+                            {% else %}#ff0000{% endif %};">
+                <span class="stat-value">{{ hero.agility }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hero-details-extra">
+    {% if hero.first_power %}
+        <p>First Power: {{ hero.first_power }}</p>
+    {% endif %}
+    {% if hero.story %}
+        <p>Story: {{ hero.story }}</p>
+    {% endif %}
+    {% if hero.real_creator %}
+        <p>Real Creator: {{ hero.real_creator }}</p>
+    {% endif %}
+    {% if hero.movies %}
+        <p>Movies: {{ hero.movies }}</p>
+    {% endif %}
+    {% if hero.shows %}
+        <p>Shows: {{ hero.shows }}</p>
+    {% endif %}
+</div>

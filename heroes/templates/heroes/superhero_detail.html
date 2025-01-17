@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="superhero-detail-container {{ superhero.universe|lower }}-universe">
+        <div class="superhero-detail">
+            <h2 class="superhero-name">{{ superhero.name }}</h2> 
+              <div class="image-and-basic-info">
+                  <div class="image-main-detail">
+                       {% if superhero.main_image %}
+                          <img src="{{ superhero.main_image.url }}" alt="Main Image">
+                        {% endif %}
+                   </div>
+                 <div class = "basic-information-detail" >
+                   <p>Universe: {{ superhero.universe }}</p>
+                   <p>Created By: {{ superhero.created_by.username }}</p>
+                  </div>
+                </div>
+
+               <div class ="hero-additional-info">
+
+                   {% if superhero.first_power %}
+                     <p><strong>First Power:</strong> {{ superhero.first_power }}</p>
+                  {% endif %}
+                  {% if superhero.story %}
+                   <p><strong>Story:</strong> {{ superhero.story }}</p>
+                 {% endif %}
+                  {% if superhero.real_creator %}
+                       <p><strong>Real Creator:</strong> {{ superhero.real_creator }}</p>
+                   {% endif %}
+                   {% if superhero.alter_ego %}
+                       <p><strong>Alter Ego:</strong> {{ superhero.alter_ego }}</p>
+                   {% endif %}
+
+                   {% if superhero.base %}
+                         <p><strong>Base:</strong> {{ superhero.base }}</p>
+                   {% endif %}
+
+                   {% if superhero.movies %}
+                    <p><strong>Movies:</strong> {{ superhero.movies }}</p>
+                    {% endif %}
+
+                   {% if superhero.shows %}
+                      <p><strong>Shows:</strong> {{ superhero.shows }}</p>
+                   {% endif %}
+               </div>
+               <hr/>
+            <div class ="related-superhero">
+                {% if superhero.allies.all %}
+                    <h3>Allies</h3>
+                     <ul class ="relation-list">
+                         {% for ally in superhero.allies.all %}
+                             <li>{{ ally.name }}</li>
+                         {% endfor %}
+                     </ul>
+               {% endif %}
+                 {% if superhero.enemies.all %}
+                      <h3>Enemies</h3>
+                     <ul class ="relation-list">
+                           {% for enemy in superhero.enemies.all %}
+                               <li>{{ enemy.name }}</li>
+                           {% endfor %}
+                     </ul>
+                  {% endif %}
+           </div>
+            {% if superhero.comic_series %}
+              <p><strong>Comic Series:</strong> {{ superhero.comic_series }}</p>
+             {% endif %}
+             {% if superhero.bio %}
+             <p><strong>Bio:</strong> {{ superhero.bio }}</p>
+            {% endif %}
+           <div class ="hero-gallery">
+                <h3>Additional Images</h3>
+                 <div class="image-grid">
+                     {% for image in images %}
+                           <img src="{{ image.image.url }}" alt="Superhero image" style="max-width: 150px; max-height: 150px; margin: 5px;">
+                        {% endfor %}
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'add-image' pk=superhero.pk %}">Add Image</a>
+                       {% endif %}
+                  </div>
+              </div>
+              <div class="likes-and-actions">
+                   {% if user.is_authenticated %}
+                        {% if user_liked %}
+                            <a href="{% url 'like-hero' pk=superhero.pk %}">Unlike</a>
+                        {% else %}
+                              <a href="{% url 'like-hero' pk=superhero.pk %}">Like</a>
+                          {% endif %}
+                     {% endif %}
+                         <p>Likes: {{ superhero.likes.count }}</p>
+                  </div>
+                   <hr/>
+
+             <div class = "comments-container">
+                 <h3>Comments</h3>
+                 {% for comment in comments %}
+                     <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
+                      <small>{{ comment.created_at }}</small>
+                 {% endfor %}
+              {% if user.is_authenticated %}
+                   <a href="{% url 'add-comment' pk=superhero.pk %}">Add Comment</a>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
